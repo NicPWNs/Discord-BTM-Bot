@@ -9,4 +9,5 @@ sam build && sam deploy
 ```
 
 ## Function Ideas
-- [] Grab any Twitch emote
+- [ ] Grab any Twitch emote
+- [x] Connect to other APIs
