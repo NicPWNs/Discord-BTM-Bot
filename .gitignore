@@ -1,0 +1,6 @@
+node_modules
+.aws-sam
+samconfig.toml
+template.yaml
+.env
+.DS_Store

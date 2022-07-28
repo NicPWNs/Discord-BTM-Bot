@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  serverless-discord-bot
+
+Transform:
+- AWS::Serverless-2016-10-31
+
+Parameters:
+  StageName:
+    Type: String
+    Description: Stage Name used in API GW
+    Default: Prod
+
+Resources:
+  MainSNSTopic:
+    Type: AWS::SNS::Topic
+
+  proxyGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      MethodSettings:
+        - ResourcePath: /
+          HttpMethod: ANY
+
+  proxyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/modules/proxy-function.handler
+      Runtime: nodejs14.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A Lambda function that returns a static string.
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - SNSPublishMessagePolicy:
+            TopicName: !GetAtt MainSNSTopic.TopicName
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: ANY
+            RestApiId:
+              Ref: proxyGateway
+      Environment:
+        Variables:
+          TOPIC_ARN: !Ref MainSNSTopic
+
+Outputs:
+  ProxyGWEndpoint:
+    Description: "API Gateway endpoint URL to pass to Discord Application Portal"
+    Value: !Sub "https://${proxyGateway}.execute-api.${AWS::Region}.amazonaws.com/${StageName}/"
