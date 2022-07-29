@@ -46,7 +46,7 @@ exports.handler = async (event) => {
     };
     // Create promise and SNS service object
     await new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
-    
+
     return {
       statusCode: 200,
       body: JSON.stringify({
