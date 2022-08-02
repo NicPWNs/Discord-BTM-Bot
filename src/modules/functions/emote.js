@@ -68,11 +68,11 @@ const action = async (body) => {
 
   if (added === true) {
     var response = {
-      "content": "✅ Emote added to the server!\n" + image
+      "content": "✅   Emote added to the server!\n" + image
     }
   } else if (added === false) {
     var response = {
-      "content": "❌ Emote NOT added to the server!\n" + image
+      "content": "❌   Emote NOT added to the server!\n" + image
     }
   } else {
     var response = {
