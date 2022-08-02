@@ -1,4 +1,4 @@
-exports.templateResource = (module, command, name) => {
+exports.templateResource = (module, command, name, token) => {
   return {
     "Type": "AWS::Serverless::Function",
     "Properties": {
@@ -25,6 +25,11 @@ exports.templateResource = (module, command, name) => {
               ]
             }
           }
+        }
+      },
+      "Environment": {
+        "Variables": {
+          "BOT_TOKEN": token
         }
       }
     }

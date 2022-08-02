@@ -25,7 +25,6 @@ exports.handler = async (event) => {
     }
   }
 
-
   // Replying to ping (requirement 2.)
   const body = JSON.parse(strBody)
   if (body.type == 1) {
