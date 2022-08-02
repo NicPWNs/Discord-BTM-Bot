@@ -16,4 +16,4 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 ## 💡 To-Do
 - [x] Grab any Twitch emote
 - [X] Add grabbed Twitch emote to the server
-- [ ] Migrate to 7TV API v3 (waiting for implementation: https://github.com/SevenTV/API/blob/dev/internal/rest/v3/routes/emotes/emotes.go)
+- [ ] Migrate to 7TV API v3 ([waiting for 7TV Emote Search Endpoint](https://github.com/SevenTV/API/blob/dev/internal/rest/v3/routes/emotes/emotes.go))
