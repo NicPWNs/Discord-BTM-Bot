@@ -16,5 +16,5 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 ## 💡 To-Do
 - [x] Grab any Twitch emote
 - [X] Add grabbed Twitch emote to the server
-- [ ] Guess age based on given name
+- [X] Guess age based on given name
 - [ ] Migrate to 7TV API v3 ([waiting for 7TV Emote Search API Endpoint](https://github.com/SevenTV/API/blob/dev/internal/rest/v3/routes/emotes/emotes.go))

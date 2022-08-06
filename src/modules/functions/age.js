@@ -4,10 +4,10 @@ const { globalHandler } = require('../handler.js');
 
 exports.data = {
   name: 'age',
-   type: 1,
+  type: 1,
   description: 'Guess age based on given name.',
-  options: [
-  {
+  options:
+  [{
     "name": "name",
     "description": "Name to guess age of.",
     "type": 3,
@@ -17,19 +17,27 @@ exports.data = {
 
 const action = async (body) => {
 
-  var response = await axios
-  .get('https://api.agify.io/?name=' + body.data.options[0].value)
+  var age = await axios
+  .get('https://api.agify.io/?name=' + encodeURIComponent(body.data.options[0].value))
   .then(function (request) {
 
-    age = request.data.age
-    return age
+    return request.data.age
   })
   .catch(function (error) {
 
-    console.log("ERROR: Age not retrieved.")
     console.log(error)
-    return age
   })
+
+  var response = {
+    "content": "I guess the age of \"" + body.data.options[0].value + "\" is " + age + " !"
+  }
+
+  if (age == null){
+
+    response = {
+      "content": "Name not found!"
+    }
+  }
 
   return response
 }

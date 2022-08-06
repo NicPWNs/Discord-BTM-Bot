@@ -5,7 +5,7 @@ const { globalHandler } = require('../handler.js');
 
 exports.data = {
   name: 'emote',
-   type: 1,
+  type: 1,
   description: 'Retrieves a specified emote.',
   options: [
   {
