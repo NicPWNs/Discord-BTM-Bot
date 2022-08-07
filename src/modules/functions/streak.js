@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { globalHandler } = require('../handler.js');
 const AWS = require('aws-sdk');
-AWS.config.update({region: 'us-east-1'});
+AWS.config.update({region: 'us-east-1', maxRetries: 1});
 var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 // Define Discord Command
@@ -13,24 +13,28 @@ exports.data = {
 
 const action = async (body) => {
 
+    // Get Item
+    var params = {
+        TableName: 'discord-streak',
+        Key: {
+          id: {S: body.member.user.id}
+        },
+        ProjectionExpression: 'streak'
+    };
+
+    var data = await ddb.getItem(params).promise();
+
     // Put Item
     var params = {
         TableName: 'discord-streak',
         Item: {
           id: {S: body.member.user.id},
-          streak: {S: String(1)},
+          streak: {S: String(Number(data.Item.streak.S) + 1)},
           time: {S: String(Date.now())}
         }
       };
 
-      ddb.putItem(params, function(err, data) {
-        if (err) {
-          console.log("Error", err);
-        } else {
-          console.log("Success", data);
-        }
-      });
-
+    await ddb.putItem(params).promise();
 
     // Get Item
     var params = {
@@ -41,21 +45,11 @@ const action = async (body) => {
         ProjectionExpression: 'streak'
     };
 
-    data = ddb.getItem(params, function(err, data) {
-        if (err) {
-          console.log("Error", err);
-        } else {
-          console.log("Success", data);
-          return data
-        }
-    });
-
-    console.log(data.httpRequest.body.Key.streak)
+    var data = await ddb.getItem(params).promise();
 
     // Respond to Discord
     var response = {
-        "content": "Your streak is: " + data.httpRequest.body.Key.streak
-
+        "content": "Your streak is: " + data.Item.streak.S
     }
 
     return response
