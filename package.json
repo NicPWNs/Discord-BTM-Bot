@@ -5,6 +5,7 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
+        "aws-sdk": "^2.1189.0",
         "axios": "^0.27.2",
         "dotenv": "^16.0.1",
         "filereader": "^0.10.3",
