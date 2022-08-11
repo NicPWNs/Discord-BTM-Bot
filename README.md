@@ -13,7 +13,7 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - ```/emote [search]```: Searches for a specified emote.
 - ```/emote [search] [add:True]```: Adds specified emote to Discord server.
 - ```/age [name]```: Guesses the age of a specified name.
-- ```/streak```: Keep a daily streak going.
+- ```/streak```: Keep a daily streak going. Cooldown resets at midnight.
 
 ## 💡 To-Do
 - [x] Grab any Twitch emote
