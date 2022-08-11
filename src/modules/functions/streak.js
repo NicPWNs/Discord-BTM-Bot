@@ -90,7 +90,7 @@ const action = async (body) => {
 
   } else if (currTime.getTime() > storedLastMid.getTime() && currTime.getTime() < storedNextMid.getTime()) {
 
-    prefix = "You've already done your streak today! "
+    prefix = ""
 
     var params = {
       TableName: 'discord-streak',
