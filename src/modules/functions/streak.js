@@ -5,138 +5,170 @@ AWS.config.update({region: 'us-east-1', maxRetries: 1});
 var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 exports.data = {
-    name: 'streak',
-    type: 1,
-    description: 'Keep your daily streak going!'
+  name: 'streak',
+  type: 1,
+  description: 'Keep your daily streak going!'
 }
 
 const action = async (body) => {
 
-    var params = {
-        TableName: 'discord-streak',
-        Key: {
-          id: {S: body.member.user.id}
-        },
-        ProjectionExpression: 'streak, updated, lastMid, nextMid, skipMid'
-    };
+  var params = {
+    TableName: 'discord-streak',
+    Key: {
+      id: {S: body.member.user.id}
+    },
+    ProjectionExpression: 'streak, updated, lastMid, nextMid, skipMid'
+  };
 
-    var data = await ddb.getItem(params).promise();
+  var data = await ddb.getItem(params).promise();
 
-    var currTime = Date.now()
-    var already = false
-    var missed = false
+  if (typeof data.Item !== 'undefined') {
+  var storedLastMid = new Date(data.Item.lastMid.S)
+  var storedNextMid = new Date(data.Item.nextMid.S)
+  var storedSkipMid = new Date(data.Item.skipMid.S)
+  }
 
-    var lastMidnight = new Date()
-    lastMidnight.setHours(0,0,0,0)
-    const est = -300; //Timezone offset for EST in minutes.
-    lastMidnight = new Date(lastMidnight.getTime() + est*60*1000)
-    lastMidnight = lastMidnight.getTime()
+  var prefix = ""
+  var streak = 0
+  var offset = -240; //Timezone offset for EDT in minutes.
 
-    var nextMidnight = new Date()
-    nextMidnight.setHours(24,0,0,0)
-    nextMidnight = new Date(nextMidnight.getTime() + est*60*1000)
-    nextMidnight = nextMidnight.getTime()
+  var currTime = new Date()
+  currTime = new Date(currTime.getTime() + offset*60*1000)
 
-    var skipMidnight = new Date()
-    skipMidnight.setHours(48,0,0,0)
-    skipMidnight = new Date(skipMidnight.getTime() + est*60*1000)
-    skipMidnight = skipMidnight.getTime()
+  var lastMidnight = new Date()
+  lastMidnight = new Date(lastMidnight.getTime() + offset*60*1000)
+  lastMidnight.setHours(0,0,0,0)
 
-    var streak = 0
-    var updated = Date.now()
-    var lastMid = lastMidnight
-    var nextMid = nextMidnight
-    var skipMid = skipMidnight
+  var nextMidnight = new Date()
+  nextMidnight = new Date(nextMidnight.getTime() + offset*60*1000)
+  nextMidnight.setHours(24,0,0,0)
 
-    if (typeof data.Item !== 'undefined') {
-      streak = Number(data.Item.streak.S)
-      updated = Number(data.Item.updated.S)
-      lastMid = Number(data.Item.lastMid.S)
-      nextMid = Number(data.Item.nextMid.S)
-      skipMid = Number(data.Item.skipMid.S)
-    }
+  var skipMidnight = new Date()
+  skipMidnight = new Date(skipMidnight.getTime() + offset*60*1000)
+  skipMidnight.setHours(48,0,0,0)
 
-    if (currTime > lastMid && currTime < nextMid) {
-      already = true
-    } else if (currTime > nextMid && currTime > skipMid) {
-      missed = true
-    } else if (currTime > lastMid && currTime > nextMid) {
-      var params = {
-        TableName: 'discord-streak',
-        Item: {
-          id: {S: body.member.user.id},
-          streak: {S: String(Number(streak) + 1)},
-          updated: {S: String(Date.now())},
-          lastMid: {S: String(lastMidnight)},
-          nextMid: {S: String(nextMidnight)},
-          skipMid: {S: String(skipMidnight)}
-        }
-      };
 
-    await ddb.putItem(params).promise();
-    }
+  if (typeof data.Item === 'undefined') {
+
+    prefix = "You just started a new streak! "
 
     var params = {
-        TableName: 'discord-streak',
-        Key: {
-          id: {S: body.member.user.id}
-        },
-        ProjectionExpression: 'streak'
-    };
-
-    var data = await ddb.getItem(params).promise();
-    var streak = Number(data.Item.streak.S)
-    var emote = ""
-    var prefix = ""
-
-    if (missed) {
-      prefix = "You missed your streak! "
+      TableName: 'discord-streak',
+      Item: {
+        id: {S: body.member.user.id},
+        streak: {S: String(Number(streak) + 1)},
+        updated: {S: String(currTime)},
+        lastMid: {S: String(lastMidnight)},
+        nextMid: {S: String(nextMidnight)},
+        skipMid: {S: String(skipMidnight)}
+      }
     }
 
-    if (already) {
-      prefix = "You've already done your streak today! "
+    streak = streak + 1
+
+    await ddb.putItem(params).promise()
+
+  } else if (currTime.getTime() > storedSkipMid.getTime()) {
+
+    prefix = "You missed your streak! "
+
+    var params = {
+      TableName: 'discord-streak',
+      Item: {
+        id: {S: body.member.user.id},
+        streak: {S: String(Number(streak) + 1)},
+        updated: {S: String(currTime)},
+        lastMid: {S: String(lastMidnight)},
+        nextMid: {S: String(nextMidnight)},
+        skipMid: {S: String(skipMidnight)}
+      }
     }
 
-    switch (true) {
-      case (streak < 2):
-        emote = "💩";
-        break;
-      case (streak < 3):
-        emote = "✌️";
-        break;
-      case (streak < 4):
-        emote = "👌";
-        break;
-      case (streak < 5):
-        emote = "🍀";
-        break;
-      case (streak < 10):
-        emote = "🔥";
-        break;
-      case (streak < 25):
-        emote = "🧨";
-        break;
-      case (streak < 50):
-        emote = "🏆";
-        break;
-      case (streak < 75):
-        emote = "💀";
-        break;
-      case (streak < 100):
-        emote = "💎";
-        break;
-      case (streak < 1000):
-        emote = "💯 You weren't supposed to actually take it this far...";
-        break;
-      default:
-        emote = "🔥";
+    streak = streak + 1
+
+    await ddb.putItem(params).promise()
+
+  } else if (currTime.getTime() > storedLastMid.getTime() && currTime.getTime() < storedNextMid.getTime()) {
+
+    prefix = "You've already done your streak today! "
+
+    var params = {
+      TableName: 'discord-streak',
+      Item: {
+        id: {S: body.member.user.id},
+        streak: {S: String(Number(data.Item.streak.S))},
+        updated: {S: String(currTime)},
+        lastMid: {S: String(data.Item.lastMid.S)},
+        nextMid: {S: String(data.Item.nextMid.S)},
+        skipMid: {S: String(data.Item.skipMid.S)}
+      }
     }
 
-    var response = {
-        "content": prefix + "Your streak is: " + streak + " " + emote
+    streak = data.Item.streak.S
+
+    await ddb.putItem(params).promise()
+
+  } else if (currTime.getTime() > storedLastMid.getTime() && currTime.getTime() > storedNextMid.getTime()) {
+
+    prefix = "You hit your streak! "
+
+    var params = {
+      TableName: 'discord-streak',
+      Item: {
+        id: {S: body.member.user.id},
+        streak: {S: String(Number(data.Item.streak.S) + 1)},
+        updated: {S: String(currTime)},
+        lastMid: {S: String(lastMidnight)},
+        nextMid: {S: String(nextMidnight)},
+        skipMid: {S: String(skipMidnight)}
+      }
     }
 
-    return response
+    streak = data.Item.streak.S + 1
+
+    await ddb.putItem(params).promise()
+  }
+
+  switch (true) {
+    case (streak < 2):
+      emote = "💩";
+      break;
+    case (streak < 3):
+      emote = "✌️";
+      break;
+    case (streak < 4):
+      emote = "👌";
+      break;
+    case (streak < 5):
+      emote = "🍀";
+      break;
+    case (streak < 10):
+      emote = "🔥";
+      break;
+    case (streak < 25):
+      emote = "🧨";
+      break;
+    case (streak < 50):
+      emote = "🏆";
+      break;
+    case (streak < 75):
+      emote = "💀";
+      break;
+    case (streak < 100):
+      emote = "💎";
+      break;
+    case (streak < 1000):
+      emote = "💯 You weren't supposed to actually take it this far...";
+      break;
+    default:
+      emote = "🔥";
+  }
+
+  var response = {
+    "content": prefix + "Your streak is: " + streak + "   " + emote
+  }
+
+  return response
 }
 
 exports.handler = (event) => {
