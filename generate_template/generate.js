@@ -42,7 +42,7 @@ const main = () => {
       // add functions existing in src/ but not in template.yaml by their name
       // remove functions existing in template.yaml but not in src/
       if (!template.Resources[resourceName]) {
-        newFnResources[resourceName] = templateResource(module, command, data.name, process.env.BOT_TOKEN)
+        newFnResources[resourceName] = templateResource(module, command, data.name, process.env.BOT_TOKEN, process.env.TRN_API_KEY)
       } else {
         // if there is name change, apply it
         let newResource = handleNameChange(template.Resources[resourceName], data.name)
