@@ -14,6 +14,8 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - ```/emote [search] [add:True]```: Adds specified emote to Discord server.
 - ```/age [name]```: Guesses the age of a specified name.
 - ```/streak```: Keep a daily streak going. Cooldown resets at midnight.
+- ```/kanye```: Print a random Kanye West quote.
+- ```/csgo [username] [stat]```: Retrieve CS:GO stats.
 
 ## 💡 To-Do
 - [x] Grab any Twitch emote
@@ -23,5 +25,5 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - [x] Connect to NoSQL DB for stored functionality
 - [x] Keep a daily streak going
 - [x] Kanye Quotes
-- [ ] CS:GO Stats
+- [x] CS:GO Stats
 - [ ] Website Screenshot
