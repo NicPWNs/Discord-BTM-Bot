@@ -145,163 +145,57 @@ const action = async (body) => {
       console.log(error);
     });
 
-  stat =
-    "**" +
-    stats.data.data.platformInfo.platformUserHandle +
-    " " +
-    stats.data.data.segments[0].stats[body.data.options[1].value].displayName +
-    ":**   " +
-    stats.data.data.segments[0].stats[body.data.options[1].value].displayValue;
-
   if (body.data.options[1].value === "all") {
     stat =
       "__**" +
       stats.data.data.platformInfo.platformUserHandle +
       " Stats:**__\n";
-    stat +=
+
+    var types = [
+      "timePlayed",
+      "score",
+      "kills",
+      "deaths",
+      "kd",
+      "damage",
+      "headshots",
+      "shotsFired",
+      "shotsHit",
+      "shotsAccuracy",
+      "snipersKilled",
+      "bombsPlanted",
+      "bombsDefused",
+      "moneyEarned",
+      "hostagesRescued",
+      "mvp",
+      "wins",
+      "ties",
+      "matchesPlayed",
+      "losses",
+      "roundsPlayed",
+      "roundsWon",
+      "wlPercentage",
+      "headshotPct",
+    ];
+
+    for (let i = 0; i < types.length; i++) {
+      stat +=
+        "**" +
+        stats.data.data.segments[0].stats[types[i]].displayName +
+        ":**   " +
+        stats.data.data.segments[0].stats[types[i]].displayValue +
+        "\n";
+    }
+  } else {
+    stat =
       "**" +
-      stats.data.data.segments[0].stats.timePlayed.displayName +
+      stats.data.data.platformInfo.platformUserHandle +
+      " " +
+      stats.data.data.segments[0].stats[body.data.options[1].value]
+        .displayName +
       ":**   " +
-      stats.data.data.segments[0].stats.timePlayed.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.score.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.score.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.kills.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.kills.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.deaths.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.deaths.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.kd.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.kd.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.damage.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.damage.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.headshots.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.headshots.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.shotsFired.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.shotsFired.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.shotsHit.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.shotsHit.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.shotsAccuracy.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.shotsAccuracy.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.snipersKilled.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.snipersKilled.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.bombsPlanted.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.bombsPlanted.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.bombsDefused.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.bombsDefused.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.moneyEarned.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.moneyEarned.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.hostagesRescued.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.hostagesRescued.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.mvp.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.mvp.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.wins.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.wins.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.ties.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.ties.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.matchesPlayed.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.matchesPlayed.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.losses.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.losses.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.roundsPlayed.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.roundsPlayed.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.roundsWon.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.roundsWon.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.wlPercentage.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.wlPercentage.displayValue +
-      "\n";
-    stat +=
-      "**" +
-      stats.data.data.segments[0].stats.headshotPct.displayName +
-      ":**   " +
-      stats.data.data.segments[0].stats.headshotPct.displayValue +
-      "\n";
+      stats.data.data.segments[0].stats[body.data.options[1].value]
+        .displayValue;
   }
 
   var response = {

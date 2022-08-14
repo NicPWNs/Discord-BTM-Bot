@@ -16,6 +16,7 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - ```/streak```: Keep a daily streak going. Cooldown resets at midnight.
 - ```/kanye```: Print a random Kanye West quote.
 - ```/csgo [username] [stat]```: Retrieve CS:GO stats.
+- ```/nasa```: Return the NASA photo of the day.
 
 ## 💡 To-Do
 - [x] Grab any Twitch emote
@@ -26,4 +27,4 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - [x] Keep a daily streak going
 - [x] Kanye Quotes
 - [x] CS:GO Stats
-- [ ] Website Screenshot
+- [x] NASA Photo of the Day
