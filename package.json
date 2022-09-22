@@ -7,6 +7,7 @@
     "dependencies": {
         "aws-sdk": "^2.1189.0",
         "axios": "^0.27.2",
+        "blueimp-md5": "^2.19.0",
         "dotenv": "^16.0.1",
         "filereader": "^0.10.3",
         "find-config": "^1.0.0",
@@ -14,6 +15,8 @@
         "node-fetch": "^3.2.10",
         "path": "^0.12.7",
         "tweetnacl": "^1.0.3",
+        "wasm-imagemagick": "^1.2.8",
+        "worker": "^0.4.0",
         "xhr2": "^0.2.1",
         "yaml": "^2.1.1"
     },

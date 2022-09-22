@@ -28,3 +28,5 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - [x] Kanye Quotes
 - [x] CS:GO Stats
 - [x] NASA Photo of the Day
+- [ ] Upload photos to DB
+- [ ] Post a random photo from DB daily
