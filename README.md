@@ -1,4 +1,4 @@
-# BlessThisMess Discord Server Bot
+# BlessThisMess Discord Bot
 
 A basic Discord bot for learning and fun.
 
