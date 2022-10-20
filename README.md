@@ -25,6 +25,7 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - [x] Guess age based on given name
 - [x] Connect to NoSQL DB for stored functionality
 - [x] Keep a daily streak going
+- [ ] Track current and all-time highest streak
 - [x] Kanye Quotes
 - [x] CS:GO Stats
 - [x] NASA Photo of the Day
