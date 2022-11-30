@@ -28,6 +28,18 @@ const action = async (body) => {
     TableName: "discord-streak",
     Key: {
       id: {
+        S: "allTimeStreak",
+      },
+    },
+    ProjectionExpression: "stat",
+  };
+
+  var dataStats = await ddb.getItem(params).promise();
+
+  var params = {
+    TableName: "discord-streak",
+    Key: {
+      id: {
         S: body.member.user.id,
       },
     },
@@ -61,12 +73,6 @@ const action = async (body) => {
   var skipMidnight = new Date();
   skipMidnight = new Date(skipMidnight.getTime() + offset * 60 * 1000);
   skipMidnight.setHours(48, 0, 0, 0);
-
-  if (typeof body.data.options !== "undefined") {
-    if (body.data.options[0].value === true) {
-      stats = photo.data.explanation;
-    }
-  }
 
   if (typeof data.Item === "undefined") {
     prefix = "You just started a new streak! ";
@@ -178,6 +184,22 @@ const action = async (body) => {
 
     streak = data.Item.streak.S;
 
+    if (streak > Number(dataStats.Item.stat.S)) {
+      var paramsStats = {
+        TableName: "discord-streak",
+        Item: {
+          id: {
+            S: "allTimeStreak",
+          },
+          stat: {
+            S: streak,
+          },
+        },
+      };
+
+      await ddb.putItem(paramsStats).promise();
+    }
+
     await ddb.putItem(params).promise();
   } else if (
     currTime.getTime() > storedLastMid.getTime() &&
@@ -213,6 +235,22 @@ const action = async (body) => {
     };
 
     streak = Number(data.Item.streak.S) + 1;
+
+    if (streak > Number(dataStats.Item.stat.S)) {
+      var paramsStats = {
+        TableName: "discord-streak",
+        Item: {
+          id: {
+            S: "allTimeStreak",
+          },
+          stat: {
+            S: streak,
+          },
+        },
+      };
+
+      await ddb.putItem(paramsStats).promise();
+    }
 
     await ddb.putItem(params).promise();
   }
@@ -252,8 +290,16 @@ const action = async (body) => {
       emote = "🔥";
   }
 
+  stats = "";
+
+  if (typeof body.data.options !== "undefined") {
+    if (body.data.options[0].value === true) {
+      stats = "\nAll-Time Highest Streak: " + dataStats.Item.stat.S;
+    }
+  }
+
   var response = {
-    content: prefix + "Your streak is: " + streak + "   " + emote,
+    content: prefix + "Your streak is: " + streak + "   " + emote + stats,
   };
 
   return response;
