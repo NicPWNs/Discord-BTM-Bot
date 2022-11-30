@@ -1,6 +1,5 @@
 # BlessThisMess Discord Bot
-
-A basic Discord bot for learning and fun.
+A serverless Discord bot for learning and fun. Hosted in AWS on Lambda and DynamoDB.
 
 ## 🛠️ Build & Deploy to AWS Lambda
 ```bash
@@ -13,7 +12,7 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - ```/emote [search]```: Searches for a specified emote.
 - ```/emote [search] [add:True]```: Adds specified emote to Discord server.
 - ```/age [name]```: Guesses the age of a specified name.
-- ```/streak```: Keep a daily streak going. Cooldown resets at midnight.
+- ```/streak [stats:True]```: Keep a daily streak going. Cooldown resets at midnight.
 - ```/kanye```: Print a random Kanye West quote.
 - ```/csgo [username] [stat]```: Retrieve CS:GO stats.
 - ```/nasa```: Return the NASA photo of the day.
@@ -26,6 +25,7 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - [x] Connect to NoSQL DB for stored functionality
 - [x] Keep a daily streak going
 - [ ] Track current and all-time highest streak
+- [ ] Fix streak timeout error bug
 - [x] Kanye Quotes
 - [x] CS:GO Stats
 - [x] NASA Photo of the Day

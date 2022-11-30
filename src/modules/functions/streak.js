@@ -13,6 +13,14 @@ exports.data = {
   name: "streak",
   type: 1,
   description: "Keep your daily streak going!",
+  options: [
+    {
+      name: "stats",
+      description: "Get streak stats.",
+      type: 5,
+      required: false,
+    },
+  ],
 };
 
 const action = async (body) => {
@@ -23,7 +31,8 @@ const action = async (body) => {
         S: body.member.user.id,
       },
     },
-    ProjectionExpression: "streak, updated, lastMid, nextMid, skipMid",
+    ProjectionExpression:
+      "username, streak, updated, lastMid, nextMid, skipMid",
   };
 
   var data = await ddb.getItem(params).promise();
@@ -53,6 +62,12 @@ const action = async (body) => {
   skipMidnight = new Date(skipMidnight.getTime() + offset * 60 * 1000);
   skipMidnight.setHours(48, 0, 0, 0);
 
+  if (typeof body.data.options !== "undefined") {
+    if (body.data.options[0].value === true) {
+      stats = photo.data.explanation;
+    }
+  }
+
   if (typeof data.Item === "undefined") {
     prefix = "You just started a new streak! ";
 
@@ -61,6 +76,9 @@ const action = async (body) => {
       Item: {
         id: {
           S: body.member.user.id,
+        },
+        username: {
+          S: body.member.user.username,
         },
         streak: {
           S: String(Number(streak) + 1),
@@ -76,6 +94,9 @@ const action = async (body) => {
         },
         skipMid: {
           S: String(skipMidnight),
+        },
+        username: {
+          S: body.member.user.username,
         },
       },
     };
@@ -92,6 +113,9 @@ const action = async (body) => {
         id: {
           S: body.member.user.id,
         },
+        username: {
+          S: body.member.user.username,
+        },
         streak: {
           S: String(Number(streak) + 1),
         },
@@ -106,6 +130,9 @@ const action = async (body) => {
         },
         skipMid: {
           S: String(skipMidnight),
+        },
+        username: {
+          S: body.member.user.username,
         },
       },
     };
@@ -125,6 +152,9 @@ const action = async (body) => {
         id: {
           S: body.member.user.id,
         },
+        username: {
+          S: body.member.user.username,
+        },
         streak: {
           S: String(Number(data.Item.streak.S)),
         },
@@ -139,6 +169,9 @@ const action = async (body) => {
         },
         skipMid: {
           S: String(data.Item.skipMid.S),
+        },
+        username: {
+          S: body.member.user.username,
         },
       },
     };
@@ -157,6 +190,9 @@ const action = async (body) => {
       Item: {
         id: {
           S: body.member.user.id,
+        },
+        username: {
+          S: body.member.user.username,
         },
         streak: {
           S: String(Number(data.Item.streak.S) + 1),
