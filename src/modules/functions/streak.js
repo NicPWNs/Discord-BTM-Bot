@@ -31,7 +31,7 @@ const action = async (body) => {
         S: "allTimeStreak",
       },
     },
-    ProjectionExpression: "stat, username",
+    ProjectionExpression: "stat, username, userId",
   };
 
   var dataStats = await ddb.getItem(params).promise();
@@ -194,6 +194,9 @@ const action = async (body) => {
           username: {
             S: body.member.user.username,
           },
+          userId: {
+            S: body.member.user.id,
+          },
         },
       };
 
@@ -249,6 +252,9 @@ const action = async (body) => {
           username: {
             S: body.member.user.username,
           },
+          userId: {
+            S: body.member.user.id,
+          },
         },
       };
 
@@ -300,12 +306,14 @@ const action = async (body) => {
       stats =
         "\n\n📊  __**Streak Stats**__\n**All-Time Highest Streak:** " +
         dataStats.Item.stat.S +
-        " *by* " +
-        dataStats.Item.username.S +
+        " *by* <@" +
+        dataStats.Item.userId.S +
+        ">" +
         "\n**Current Highest Streak:** " +
         dataStats.Item.stat.S +
-        " *by* " +
-        dataStats.Item.username.S;
+        " *by* <@" +
+        dataStats.Item.userId.S +
+        ">";
     }
   }
 
