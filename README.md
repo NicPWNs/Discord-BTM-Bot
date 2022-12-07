@@ -26,7 +26,7 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - [x] Keep a daily streak going
 - [x] Track all-time highest streak
 - [x] Track current highest streak
-- [ ] Track personal highest streak
+- [x] Track personal highest streak
 - [ ] Fix streak timeout error bug
 - [x] Kanye Quotes
 - [x] CS:GO Stats

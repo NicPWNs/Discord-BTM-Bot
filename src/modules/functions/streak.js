@@ -56,7 +56,7 @@ const action = async (body) => {
       },
     },
     ProjectionExpression:
-      "username, streak, updated, lastMid, nextMid, skipMid",
+      "username, streak, updated, lastMid, nextMid, skipMid, personalRecord",
   };
 
   var data = await ddb.getItem(params).promise();
@@ -69,6 +69,7 @@ const action = async (body) => {
 
   var prefix = "";
   var streak = 0;
+  var personalRecord = 0;
   var offset = -240; //Timezone offset for EDT in minutes.
 
   var currTime = new Date();
@@ -116,6 +117,9 @@ const action = async (body) => {
         username: {
           S: body.member.user.username,
         },
+        personalRecord: {
+          S: String(data.Item.personalRecord.S),
+        },
       },
     };
 
@@ -151,6 +155,9 @@ const action = async (body) => {
         },
         username: {
           S: body.member.user.username,
+        },
+        personalRecord: {
+          S: String(data.Item.personalRecord.S),
         },
       },
     };
@@ -217,6 +224,9 @@ const action = async (body) => {
         username: {
           S: body.member.user.username,
         },
+        personalRecord: {
+          S: String(data.Item.personalRecord.S),
+        },
       },
     };
 
@@ -228,6 +238,10 @@ const action = async (body) => {
     prefix = "You hit your streak! ";
 
     streak = Number(data.Item.streak.S) + 1;
+
+    if (streak > Number(data.Item.personalRecord.S)) {
+      personalRecord = streak;
+    }
 
     var params = {
       TableName: "discord-streak",
@@ -252,6 +266,9 @@ const action = async (body) => {
         },
         skipMid: {
           S: String(skipMidnight),
+        },
+        personalRecord: {
+          S: String(personalRecord),
         },
       },
     };
@@ -352,6 +369,11 @@ const action = async (body) => {
         dataCurrent.Item.stat.S +
         " *by* <@" +
         dataCurrent.Item.userId.S +
+        ">" +
+        "\n**Personal Highest Streak:** " +
+        data.Item.personalRecord.S +
+        " *by* <@" +
+        body.member.user.id +
         ">";
     }
   }
