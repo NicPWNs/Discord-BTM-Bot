@@ -40,6 +40,18 @@ const action = async (body) => {
     TableName: "discord-streak",
     Key: {
       id: {
+        S: "currentStreak",
+      },
+    },
+    ProjectionExpression: "stat, username, userId",
+  };
+
+  var dataCurrent = await ddb.getItem(params).promise();
+
+  var params = {
+    TableName: "discord-streak",
+    Key: {
+      id: {
         S: body.member.user.id,
       },
     },
@@ -146,11 +158,37 @@ const action = async (body) => {
     streak = streak + 1;
 
     await ddb.putItem(params).promise();
+
+    if (String(body.member.user.id) === String(dataCurrent.Item.userId.S)) {
+      var paramsStats = {
+        TableName: "discord-streak",
+        Item: {
+          id: {
+            S: "currentStreak",
+          },
+          stat: {
+            S: 0,
+          },
+          username: {
+            S: "BlessThisMess",
+          },
+          userId: {
+            S: "1002004051468226560",
+          },
+        },
+      };
+
+      prefix = prefix + "**Current Highest Streak Reset!** ";
+
+      await ddb.putItem(paramsStats).promise();
+    }
   } else if (
     currTime.getTime() > storedLastMid.getTime() &&
     currTime.getTime() < storedNextMid.getTime()
   ) {
     prefix = "";
+
+    streak = data.Item.streak.S;
 
     var params = {
       TableName: "discord-streak",
@@ -162,7 +200,7 @@ const action = async (body) => {
           S: body.member.user.username,
         },
         streak: {
-          S: String(Number(data.Item.streak.S)),
+          S: String(streak),
         },
         updated: {
           S: String(currTime),
@@ -182,33 +220,14 @@ const action = async (body) => {
       },
     };
 
-    streak = data.Item.streak.S;
-
-    if (streak > Number(dataStats.Item.stat.S)) {
-      var paramsStats = {
-        TableName: "discord-streak",
-        Item: {
-          id: {
-            S: "allTimeStreak",
-          },
-          username: {
-            S: body.member.user.username,
-          },
-          userId: {
-            S: body.member.user.id,
-          },
-        },
-      };
-
-      await ddb.putItem(paramsStats).promise();
-    }
-
     await ddb.putItem(params).promise();
   } else if (
     currTime.getTime() > storedLastMid.getTime() &&
     currTime.getTime() > storedNextMid.getTime()
   ) {
     prefix = "You hit your streak! ";
+
+    streak = Number(data.Item.streak.S) + 1;
 
     var params = {
       TableName: "discord-streak",
@@ -220,7 +239,7 @@ const action = async (body) => {
           S: body.member.user.username,
         },
         streak: {
-          S: String(Number(data.Item.streak.S) + 1),
+          S: String(streak),
         },
         updated: {
           S: String(currTime),
@@ -237,8 +256,6 @@ const action = async (body) => {
       },
     };
 
-    streak = Number(data.Item.streak.S) + 1;
-
     if (streak > Number(dataStats.Item.stat.S)) {
       var paramsStats = {
         TableName: "discord-streak",
@@ -247,7 +264,29 @@ const action = async (body) => {
             S: "allTimeStreak",
           },
           stat: {
-            S: streak,
+            S: String(streak),
+          },
+          username: {
+            S: body.member.user.username,
+          },
+          userId: {
+            S: body.member.user.id,
+          },
+        },
+      };
+
+      await ddb.putItem(paramsStats).promise();
+    }
+
+    if (streak > Number(dataCurrent.Item.stat.S)) {
+      var paramsStats = {
+        TableName: "discord-streak",
+        Item: {
+          id: {
+            S: "currentStreak",
+          },
+          stat: {
+            S: String(streak),
           },
           username: {
             S: body.member.user.username,
@@ -310,9 +349,9 @@ const action = async (body) => {
         dataStats.Item.userId.S +
         ">" +
         "\n**Current Highest Streak:** " +
-        dataStats.Item.stat.S +
+        dataCurrent.Item.stat.S +
         " *by* <@" +
-        dataStats.Item.userId.S +
+        dataCurrent.Item.userId.S +
         ">";
     }
   }
