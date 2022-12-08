@@ -33,3 +33,4 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - [x] NASA Photo of the Day
 - [ ] Upload photos to DB
 - [ ] Post a random photo from DB daily
+- [ ] Integrate ChatGPT API
