@@ -4,6 +4,7 @@ const { yamlParse, yamlDump } = require("yaml-cfn");
 const { templateResource, handleNameChange } = require("./misc/templates");
 
 const fs = require("fs");
+const { ProcessCredentials } = require("aws-sdk");
 
 if (!process.env.PUBLIC_KEY) {
   throw "You must define PUBLIC_KEY in .env file or in a command line run (e.g. PUBLIC_KEY=ABCD node generate_template/generate.js)";
@@ -60,7 +61,8 @@ const main = () => {
           data.name,
           process.env.BOT_TOKEN,
           process.env.TRN_API_KEY,
-          process.env.NASA_API_KEY
+          process.env.NASA_API_KEY,
+          process.env.GPT_SESSION_TOKEN
         );
       } else {
         // if there is name change, apply it
