@@ -20,7 +20,7 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 ## 💡 To-Do
 - [x] Grab any Twitch emote
 - [x] Add grabbed Twitch emote to the server
-- [ ] Migrate to 7TV API v3 ([waiting for 7TV Emote Search API Endpoint](https://github.com/SevenTV/API/blob/dev/internal/rest/v3/routes/emotes/emotes.go))
+- [ ] Migrate to 7TV API v3
 - [x] Guess age based on given name
 - [x] Connect to NoSQL DB for stored functionality
 - [x] Keep a daily streak going
@@ -34,4 +34,3 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - [ ] Upload photos to DB
 - [ ] Post a random photo from DB daily
 - [ ] Integrate ChatGPT API
-- [ ] Convert boolean options to sub commands

@@ -238,6 +238,7 @@ const action = async (body) => {
     prefix = "You hit your streak! ";
 
     streak = Number(data.Item.streak.S) + 1;
+    personalRecord = String(data.Item.personalRecord.S);
 
     if (streak > Number(data.Item.personalRecord.S)) {
       personalRecord = streak;

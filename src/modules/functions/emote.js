@@ -64,7 +64,7 @@ const action = async (body) => {
         return added;
       })
       .catch(function (error) {
-        console.log("ERROR: Emoji could not be added.");
+        console.log("ERROR: Emote could not be added to the guild.");
         console.log(error);
         added = false;
         return added;
