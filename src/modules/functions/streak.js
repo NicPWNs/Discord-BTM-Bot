@@ -343,6 +343,12 @@ const action = async (body) => {
     case streak < 50:
       emote = "🏆";
       break;
+    case streak < 69:
+      emote = "💀";
+      break;
+    case streak < 70:
+      emote = "-  *nice*.";
+      break;
     case streak < 75:
       emote = "💀";
       break;
