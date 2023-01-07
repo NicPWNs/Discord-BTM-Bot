@@ -62,7 +62,8 @@ const main = () => {
           process.env.BOT_TOKEN,
           process.env.TRN_API_KEY,
           process.env.NASA_API_KEY,
-          process.env.GPT_SESSION_TOKEN
+          process.env.GPT_SESSION_TOKEN,
+          process.env.SEVENTV_SESSION_TOKEN
         );
       } else {
         // if there is name change, apply it

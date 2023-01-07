@@ -5,7 +5,8 @@ exports.templateResource = (
   token,
   trn_api_key,
   nasa_api_key,
-  gpt_session_token
+  gpt_session_token,
+  seventv_session_token
 ) => {
   return {
     Type: "AWS::Serverless::Function",
@@ -35,6 +36,7 @@ exports.templateResource = (
           TRN_API_KEY: trn_api_key,
           NASA_API_KEY: nasa_api_key,
           GPT_SESSION_TOKEN: gpt_session_token,
+          SEVENTV_SESSION_TOKEN: seventv_session_token,
         },
       },
     },

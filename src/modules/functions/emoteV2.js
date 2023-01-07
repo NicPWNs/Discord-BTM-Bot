@@ -55,8 +55,7 @@ const action = async (body) => {
           authority: "7tv.io",
           accept: "*/*",
           "accept-language": "en-US,en;q=0.6",
-          authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjoiNjMzNzFhM2UyODA1ZWEwYzk2MTUxM2Q5IiwidiI6MCwiaXNzIjoiN1RWLUFQSS1SRVNUIiwiZXhwIjoxNjgwOTkyMTAxfQ.SGfsIfthDJKA_uF9yeV9DXopAiDULkUy1IlqZAtrJEs",
+          authorization: process.env.NASA_API_KEY,
           "content-type": "application/json",
           dnt: "1",
           origin: "https://7tv.app",
