@@ -17,7 +17,7 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - `/kanye`: Print a random Kanye West quote.
 - `/csgo <username> <stat>`: Retrieve CS:GO stats.
 - `/nasa [details:True]`: Return the NASA photo of the day.
-- `/chat [prompt]`: Converse with the bot (GPT3).
+- `/chat <prompt>`: Converse with the bot (GPT3).
 
 ## 💡 To-Do
 - [x] Grab any Twitch emote
