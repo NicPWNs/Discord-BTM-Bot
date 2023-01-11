@@ -5,11 +5,11 @@ const { globalHandler } = require("../handler.js");
 exports.data = {
   name: "chat",
   type: 1,
-  description: "Provide a dialogue prompt for OpenAI's ChatGPT to respond to.",
+  description: "Chat with the BlessThisMess bot.",
   options: [
     {
       name: "prompt",
-      description: "Prompt for ChatGPT to respond to.",
+      description: "Prompt for BlessThisMess to respond to.",
       type: 3,
       required: true,
     },
@@ -17,23 +17,30 @@ exports.data = {
 };
 
 const action = async (body) => {
-  const { ChatGPTAPI } = await import("chatgpt");
-
-  const api = new ChatGPTAPI({
-    sessionToken: process.env.GPT_SESSION_TOKEN,
-  });
-
-  await api.ensureAuth();
-
-  const promptResponse = await api.sendMessage(
-    String(body.data.options[0].value),
+  var chat = await axios.post(
+    "https://api.openai.com/v1/completions",
     {
-      timeoutMs: 2 * 60 * 1000,
+      model: "text-davinci-003",
+      prompt: body.data.options[0].value,
+      max_tokens: 4000,
+      temperature: 1,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: process.env.OPENAI_SESSION_TOKEN,
+      },
     }
   );
 
+  botResponse = chat.data.choices[0].text;
+  discordUser = "<@" + body.member.user.id + ">";
+  botResponse = botResponse.replace("[Your Name Here]", discordUser);
+  botResponse = botResponse.replace("[Your Name]", discordUser);
+  botResponse = botResponse.replace("[Your name]", discordUser);
+
   var response = {
-    content: String(promptResponse),
+    content: chat.data.choices[0].text,
   };
 
   return response;

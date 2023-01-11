@@ -5,7 +5,7 @@ exports.templateResource = (
   token,
   trn_api_key,
   nasa_api_key,
-  gpt_session_token,
+  openai_session_token,
   seventv_session_token
 ) => {
   return {
@@ -35,7 +35,7 @@ exports.templateResource = (
           BOT_TOKEN: token,
           TRN_API_KEY: trn_api_key,
           NASA_API_KEY: nasa_api_key,
-          GPT_SESSION_TOKEN: gpt_session_token,
+          OPENAI_SESSION_TOKEN: openai_session_token,
           SEVENTV_SESSION_TOKEN: seventv_session_token,
         },
       },

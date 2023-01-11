@@ -52,20 +52,8 @@ const action = async (body) => {
       },
       {
         headers: {
-          authority: "7tv.io",
-          accept: "*/*",
-          "accept-language": "en-US,en;q=0.6",
           authorization: process.env.NASA_API_KEY,
           "content-type": "application/json",
-          dnt: "1",
-          origin: "https://7tv.app",
-          referer: "https://7tv.app/",
-          "sec-fetch-dest": "empty",
-          "sec-fetch-mode": "cors",
-          "sec-fetch-site": "cross-site",
-          "sec-gpc": "1",
-          "user-agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
         },
       }
     )
