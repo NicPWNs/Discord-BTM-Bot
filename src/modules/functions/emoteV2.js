@@ -52,7 +52,7 @@ const action = async (body) => {
       },
       {
         headers: {
-          authorization: process.env.NASA_API_KEY,
+          authorization: process.env.SEVENTV_SESSION_TOKEN,
           "content-type": "application/json",
         },
       }
