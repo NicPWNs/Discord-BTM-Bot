@@ -20,21 +20,21 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - `/chat <prompt>`: Converse with the bot (GPT3).
 
 ## 💡 To-Do
-- [x] Grab any Twitch emote
-- [x] Add grabbed Twitch emote to the server
-- [x] Migrate to 7TV API v3
-- [x] Guess age based on given name
-- [x] Connect to NoSQL DB for stored functionality
-- [x] Keep a daily streak going
-- [x] Track all-time highest streak
-- [x] Track current highest streak
-- [x] Track personal highest streak
-- [x] Kanye Quotes
-- [x] CS:GO Stats
-- [x] NASA Photo of the Day
+- [x] ~~Grab any Twitch emote~~
+- [x] ~~Add grabbed Twitch emote to the server~~
+- [x] ~~Migrate to 7TV API v3~~
+- [x] ~~Guess age based on given name~~
+- [x] ~~Connect to NoSQL DB for stored functionality~~
+- [x] ~~Keep a daily streak going~~
+- [x] ~~Track all-time highest streak~~
+- [x] ~~Track current highest streak~~
+- [x] ~~Track personal highest streak~~
+- [x] ~~Kanye Quotes~~
+- [x] ~~CS:GO Stats~~
+- [x] ~~NASA Photo of the Day~~
 - [ ] Upload photos to DB
 - [ ] Post a random photo from DB daily
-- [x] Integrate GPT3 API
+- [x] ~~Integrate GPT3 API~~
 - [ ] Fix initial timeout error bug
 - [ ] Add detailed comments to all code
 - [ ] Balance 7TV emote resolution resizing
