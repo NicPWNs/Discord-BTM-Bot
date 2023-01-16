@@ -68,13 +68,13 @@ const action = async (body) => {
     });
 
   var emote = await axios
-    .get(image + "/1x.gif")
+    .get(image + "/2x.gif")
     .then(function (request) {
-      emote = image + "/1x.gif";
+      emote = image + "/2x.gif";
       return emote;
     })
     .catch(function (error) {
-      emote = image + "/1x.png";
+      emote = image + "/2x.png";
       return emote;
     });
 

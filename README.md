@@ -11,13 +11,14 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - `/bless`: Blesses the mess.
 - `/emote <search>`: Searches for a specified emote.
 - `/emote <search> [add:True]`: Adds specified emote to Discord server.
-- `/ffz <search>`: Deprecated version 1 of `/emote` using old API.
+- `/ffz <search>`: Deprecated version of `/emote` using old API.
 - `/age <name>`: Guesses the age of a specified name.
 - `/streak [stats:True]`: Keep a daily streak going. Cooldown resets at midnight.
 - `/kanye`: Print a random Kanye West quote.
 - `/csgo <username> <stat>`: Retrieve CS:GO stats.
 - `/nasa [details:True]`: Return the NASA photo of the day.
 - `/chat <prompt>`: Converse with the bot (GPT3).
+- `/math <expression>`: Evaluate a mathematical expression.
 
 ## 💡 To-Do
 - [x] ~~Grab any Twitch emote~~
@@ -38,4 +39,4 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - [ ] Fix initial timeout error bug
 - [ ] Add detailed comments to all code
 - [ ] Balance 7TV emote resolution resizing
-- [ ] Evaluate basic math
+- [x] Evaluate basic math
