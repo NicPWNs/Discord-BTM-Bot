@@ -40,3 +40,4 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - [ ] Add detailed comments to all code
 - [ ] Balance 7TV emote resolution resizing
 - [x] Evaluate basic math
+- [ ] Migrate to Python?
