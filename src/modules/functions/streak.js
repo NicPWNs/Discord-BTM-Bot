@@ -1,4 +1,5 @@
 require("dotenv").config();
+const random = require("@sefinek/random-emoji");
 const { globalHandler } = require("../handler.js");
 const AWS = require("aws-sdk");
 AWS.config.update({
@@ -355,11 +356,11 @@ const action = async (body) => {
     case streak < 100:
       emote = "💎";
       break;
-    case streak < 1000:
-      emote = "💯 You weren't supposed to actually take it this far...";
+    case streak < 125:
+      emote = "💯";
       break;
     default:
-      emote = "🔥";
+      emote = String(random.unicode());
   }
 
   stats = "";

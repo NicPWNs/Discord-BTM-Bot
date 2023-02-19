@@ -5,6 +5,7 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
+        "@sefinek/random-emoji": "^1.4.5",
         "aws-sdk": "^2.1189.0",
         "axios": "^0.27.2",
         "blueimp-md5": "^2.19.0",
