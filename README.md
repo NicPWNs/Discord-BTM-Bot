@@ -39,6 +39,6 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - [ ] Fix initial timeout error bug
 - [ ] Add detailed comments to all code
 - [ ] Balance 7TV emote resolution resizing
-- [ ] Fix 7Tv emote authentication
+- [ ] Fix 7TV emote authentication
 - [x] Evaluate basic math
 - [ ] Migrate to Python?
