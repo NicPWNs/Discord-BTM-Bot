@@ -1,6 +1,9 @@
 # BlessThisMess Discord Bot
 A serverless Discord bot for learning and fun. Hosted in AWS on Lambda and DynamoDB.
 
+## ⚠️ Warning
+Currently being migrated to Python as [MEGABOT](https://github.com/NicPWNs/MEGABOT). This is being done due to preference for python, better community support, and ability to respond to event listeners. Not serverless, though. 😞
+
 ## 🛠️ Build & Deploy to AWS Lambda
 ```bash
 node generate_template/generate.js && node register_commands/register.js && sam build && sam deploy
@@ -41,4 +44,4 @@ node generate_template/generate.js && node register_commands/register.js && sam 
 - [ ] Balance 7TV emote resolution resizing
 - [ ] Fix 7TV emote authentication
 - [x] Evaluate basic math
-- [ ] Migrate to Python?
+- [x] Migrate to Python: [MEGABOT](https://github.com/NicPWNs/MEGABOT)
