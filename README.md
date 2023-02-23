@@ -2,7 +2,7 @@
 A serverless Discord bot for learning and fun. Hosted in AWS on Lambda and DynamoDB.
 
 ## ⚠️ Warning
-Currently being migrated to Python as [MEGABOT](https://github.com/NicPWNs/MEGABOT). This is being done due to preference for python, better community support, and ability to respond to event listeners. Not serverless, though. 😞
+This is deprecated after being migrated to Python as [MEGABOT](https://github.com/NicPWNs/MEGABOT). This was done due to preference for python, better community support, and ability to respond to event listeners. Not serverless, though. 😞
 
 ## 🛠️ Build & Deploy to AWS Lambda
 ```bash
